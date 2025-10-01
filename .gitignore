@@ -3,7 +3,7 @@ quartus/
 *.bak
 transcript
 *.wlf
-modelsim/work/
+**/modelsim/work/
 *.png
 *.PNG
 ee371hw1/
