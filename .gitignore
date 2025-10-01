@@ -1,0 +1,9 @@
+DE1_SoC_golden_top.v
+quartus/
+*.bak
+transcript
+*.wlf
+modelsim/work/
+*.png
+*.PNG
+ee371hw1/
