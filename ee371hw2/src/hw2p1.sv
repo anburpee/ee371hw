@@ -12,9 +12,9 @@ module hw2p1 (clk, reset, x, y, s);
 // 	always_comb begin
 // 		case(ps)
 
-// 			s0:		x & y ? ns = s1 : ns = s0;
+// 			s0:		ns = x & y ? s1 : s0;
 
-// 			s1: 	~(x & y) ? ns = s0 : ns = s1;
+// 			s1: 	ns = ~(x & y) ? s0 : s1;
 
 // 		endcase
 // 	end // always_comb
