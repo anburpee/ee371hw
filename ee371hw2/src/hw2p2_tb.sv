@@ -5,6 +5,15 @@ module hw2p2_tb();
 	// instantiate hw2p2
 	hw2p2 dut (.*);
 
+	// set up simulation clock
+	parameter period = 100;
+	initial begin
+		clk <= 0;
+		forever #(period/2) clk <= ~clk;
+	end // initial clock
+
+
+	// test design
 	initial begin
 									@(posedge clk);
 		reset <= 1;					@(posedge clk); // -> s0
@@ -22,6 +31,6 @@ module hw2p2_tb();
 									@(posedge clk);
 
 		$stop; // end simulation
-	end  // initial
+	end  // initial signals
 	
 endmodule  // hw1p2_tb

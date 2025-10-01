@@ -1,0 +1,172 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/ee371labs/ee371hw/ee371hw2/modelsim
+vfullAdder
+Z1 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
+Z2 !s110 1759301622
+!i10b 1
+!s100 L6_LPn@j0e?1>iV9_?L4R1
+ICfg5SzXDkgH48kTLkV`;41
+Z3 VDg1SIo80bB@j0V0VzS_@n1
+!s105 fullAdder_sv_unit
+S1
+R0
+w1759292893
+8../src/fullAdder.sv
+F../src/fullAdder.sv
+L0 12
+Z4 OV;L;10.5b;63
+r1
+!s85 0
+31
+Z5 !s108 1759301622.000000
+!s107 ../src/fullAdder.sv|
+!s90 -reportprogress|300|../src/fullAdder.sv|
+!i113 1
+Z6 tCvgOpt 0
+nfull@adder
+vhw1p1
+R1
+!s110 1759300037
+!i10b 1
+!s100 ]:fghZT]U;Jb?UD]i]FHX3
+I1Pb@nMYc18iMQLCbChMA=3
+R3
+Z7 !s105 hw2p1_sv_unit
+S1
+R0
+w1759299916
+Z8 8../src/hw2p1.sv
+Z9 F../src/hw2p1.sv
+L0 4
+R4
+r1
+!s85 0
+31
+!s108 1759300037.000000
+Z10 !s107 ../src/hw2p1.sv|
+Z11 !s90 -reportprogress|300|../src/hw2p1.sv|
+!i113 1
+R6
+vhw1p1_tb
+R1
+!s110 1759299606
+!i10b 1
+!s100 Z9ejQgk3Qi9czZGgV<P2l0
+InaDi0X=OiV@^UDGmf^InP3
+R3
+Z12 !s105 hw2p1_tb_sv_unit
+S1
+R0
+w1759299346
+Z13 8../src/hw2p1_tb.sv
+Z14 F../src/hw2p1_tb.sv
+L0 2
+R4
+r1
+!s85 0
+31
+!s108 1759299606.000000
+Z15 !s107 ../src/hw2p1_tb.sv|
+Z16 !s90 -reportprogress|300|../src/hw2p1_tb.sv|
+!i113 1
+R6
+vhw2p1
+R1
+R2
+!i10b 1
+!s100 i4e1JK>8LfPh2oe4]ORY43
+Ig=5j=>8[aa13:^B@T>P701
+R3
+R7
+S1
+R0
+w1759301394
+R8
+R9
+L0 4
+R4
+r1
+!s85 0
+31
+R5
+R10
+R11
+!i113 1
+R6
+vhw2p1_tb
+R1
+R2
+!i10b 1
+!s100 WC3=<Hm]_EAA6dF^cf_nX0
+IP0Z2AF5aFaOXUMTNM=NSc1
+R3
+R12
+S1
+R0
+w1759301526
+R13
+R14
+L0 2
+R4
+r1
+!s85 0
+31
+R5
+R15
+R16
+!i113 1
+R6
+vhw2p2
+R1
+Z17 !s110 1759306137
+!i10b 1
+!s100 i2[Um1GQH7L;`ZVM3`:C90
+Im;`U;PL7N>4ONSSiOH7QG1
+R3
+!s105 hw2p2_sv_unit
+S1
+R0
+w1759305894
+8../src/hw2p2.sv
+F../src/hw2p2.sv
+L0 4
+R4
+r1
+!s85 0
+31
+Z18 !s108 1759306137.000000
+!s107 ../src/hw2p2.sv|
+!s90 -reportprogress|300|../src/hw2p2.sv|
+!i113 1
+R6
+vhw2p2_tb
+R1
+R17
+!i10b 1
+!s100 0]I2Q3HO1G:c:F[AzjgUQ1
+IlVFWZZ2XiBR52ehNTNa331
+R3
+!s105 hw2p2_tb_sv_unit
+S1
+R0
+w1759306063
+8../src/hw2p2_tb.sv
+F../src/hw2p2_tb.sv
+L0 2
+R4
+r1
+!s85 0
+31
+R18
+!s107 ../src/hw2p2_tb.sv|
+!s90 -reportprogress|300|../src/hw2p2_tb.sv|
+!i113 1
+R6

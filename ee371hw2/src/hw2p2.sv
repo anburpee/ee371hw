@@ -5,8 +5,10 @@ module hw2p2 (clk, reset, in, out);
 	input logic clk, reset, in;
 	output logic out;
 
+	// states
 	typedef enum logic [2:0] {s0, s1, s2, s3, s4} states;
-	states
+
+	states ps, ns;
 
 
 	// next state and output logic
@@ -29,9 +31,10 @@ module hw2p2 (clk, reset, in, out);
 			s3:	
 				ns = in ? s2 : s1; 
 
-			s4:	
+			s4:	begin
 				ns = in ? s3 : s2;
-				out = in ? 1'b0 : 1'b0; // out = 1'b0
+				out = 1'b0;
+			end // s4
 
 		endcase
 	end // always_comb
