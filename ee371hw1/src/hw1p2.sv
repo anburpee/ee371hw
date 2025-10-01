@@ -1,7 +1,7 @@
 /* Module for EE/CSE371 Homework 1 Problem 2.
  * An arbitrary Mealy FSM.
  */
-module hw2p2 (clk, reset, in, out);
+module hw1p2 (clk, reset, in, out);
 	input logic clk, reset, in;
 	output logic out;
 

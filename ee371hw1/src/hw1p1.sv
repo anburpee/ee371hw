@@ -1,7 +1,7 @@
 /* Module for EE/CSE371 Homework 1 Problem 1.
  * A simple synchronous signal with a DFF and fullAdder.
  */
-module hw2p1 (clk, reset, x, y, s);
+module hw1p1 (clk, reset, x, y, s);
 	input logic clk, reset, x, y;
 	output logic s;
 

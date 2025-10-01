@@ -1,9 +1,9 @@
 /* Testbench for Homework 1 Problem 1 */
-module hw2p1_tb();
+module hw1p1_tb();
 	logic clk, reset, x, y, s;
 
 	// instantiate hw2p1
-	hw2p1 dut (.*);
+	hw1p1 dut (.*);
 
 	// clock period
 	parameter period = 100;
