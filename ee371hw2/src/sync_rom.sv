@@ -5,15 +5,15 @@
  * The output data is 7 bits wide.
  */
 module sync_rom (input  logic clk,
-					  input  logic [3:0] addr,
-					  output logic [6:0] data);
+					  input  logic [7:0] addr,  // changed from [3:0]
+					  output logic [3:0] data); // changed from [6:0]
 	
 	// signal declaration
-	logic [6:0] rom [0:15];
-	
+	logic [3:0] rom [0:255]; // changed from [3:0] packed arr, [0:15] unpacked arr, 
+
 	// load binary values from a dummy text file into ROM
 	initial
-		$readmemb("data.txt", rom);
+		$readmemh("C:/ee371labs/ee371hw/ee371hw2/src/truthtable4.txt", rom);
 	
 	// synchronously reads out data from requested addr
 	always_ff @(posedge clk)
