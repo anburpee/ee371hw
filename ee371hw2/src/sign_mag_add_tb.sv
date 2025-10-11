@@ -21,11 +21,14 @@ module sign_mag_add_tb ();
 	integer i;
 	initial begin
 		
+		// loop through all inputs
+
+		// sign_mag_add
 		for (i = 0; i < 2**7; i++) begin 
 			{a, b} <= i; #10;
 			$display("a: %b  b: %b  sum: %b", a, b, sum);
 		end
-
+		//sync_rom
 		for (i = 0; i < 2**7; i++) begin
 			addr <= i; @(posedge clk);
 			$display("addr %b  data: %b", addr, data);
