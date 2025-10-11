@@ -1,13 +1,12 @@
 onerror {resume}
 quietly WaveActivateNextPane {} 0
-add wave -noupdate /hw2p2_tb/clk
-add wave -noupdate /hw2p2_tb/reset
-add wave -noupdate /hw2p2_tb/in
-add wave -noupdate /hw2p2_tb/dut/ps
-add wave -noupdate /hw2p2_tb/dut/ns
-add wave -noupdate /hw2p2_tb/out
+add wave -noupdate /hw1p2_tb/clk
+add wave -noupdate /hw1p2_tb/reset
+add wave -noupdate /hw1p2_tb/dut/ps
+add wave -noupdate /hw1p2_tb/in
+add wave -noupdate /hw1p2_tb/out
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {1189 ps} 0}
+WaveRestoreCursors {{Cursor 1} {1295 ps} 0}
 quietly wave cursor active 1
 configure wave -namecolwidth 150
 configure wave -valuecolwidth 100
