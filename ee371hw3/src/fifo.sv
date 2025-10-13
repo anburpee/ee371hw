@@ -10,7 +10,7 @@ module fifo #(parameter DATA_WIDTH=8, ADDR_WIDTH=4)
 
 	input  logic clk, reset, rd, wr;
 	output logic empty, full;
-	input  logic [DATA_WIDTH-1:0] w_data;
+	input  logic [2*DATA_WIDTH-1:0] w_data; // multiplied bit width by 2
 	output logic [DATA_WIDTH-1:0] r_data;
 	
 	// signal declarations

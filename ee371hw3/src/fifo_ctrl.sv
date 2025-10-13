@@ -47,21 +47,32 @@ module fifo_ctrl #(parameter ADDR_WIDTH=4)
 		case ({rd, wr})
 			2'b11:  // read and write
 				begin
-					rd_ptr_next = rd_ptr + 1'b1;
-					wr_ptr_next = wr_ptr + 1'b1;
+					// put logic in a conditional b/c can't read and write at the same time
+					// unless there's at least 1 open slot
+					if (~full) 
+						begin
+							rd_ptr_next = rd_ptr + 1'b1;
+							wr_ptr_next = wr_ptr + 2'b10; // changed from  + 1'b1
+							if (wr_ptr_next == rd_ptr_next) // added logic
+								full_next = 1;
+						end
 				end
 			2'b10:  // read
-				if (~empty)
-					begin
+				if (~empty)	// don't need to change logic
+					begin	
 						rd_ptr_next = rd_ptr + 1'b1;
 						if (rd_ptr_next == wr_ptr)
 							empty_next = 1;
 						full_next = 0;
 					end
 			2'b01:  // write
-				if (~full)
+				// add conditional of rd_ptr != wr_ptr + 1'b1
+				// there has to be at least 2 open addresses to write in data
+				// since each address stores the number of bits that is read out 
+				// which is half the width of the data written in
+				if (~full & (rd_ptr != wr_ptr + 1'b1)) 
 					begin
-						wr_ptr_next = wr_ptr + 1'b1;
+						wr_ptr_next = wr_ptr + 2'b10; // changed from + 1'b1
 						empty_next = 0;
 						if (wr_ptr_next == rd_ptr)
 							full_next = 1;
