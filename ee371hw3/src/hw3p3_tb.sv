@@ -3,10 +3,11 @@ module hw3p3_tb ();
 	
 	logic clk, reset, X;
 	logic Ya, Yb, Yc, Z1, Z2;
+	logic clk_period;
 	
 	hw3p3 dut (.*);
 
-	clk_period = 100;
+	assign clk_period = 100;
 	initial begin
 		clk <= 0;
 		forever #(clk_period/2) clk <= ~clk;
