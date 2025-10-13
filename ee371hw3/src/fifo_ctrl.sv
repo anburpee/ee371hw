@@ -48,6 +48,7 @@ module fifo_ctrl #(parameter ADDR_WIDTH=4)
 	end  // always_ff
 	
 	// next state logic
+	// update full_next, one_left_next, emtpy_next in each case 
 	always_comb begin
 		// default to keeping the current values
 		rd_ptr_next = rd_ptr;
@@ -66,15 +67,7 @@ module fifo_ctrl #(parameter ADDR_WIDTH=4)
 							rd_ptr_next = rd_ptr + 1;
 							wr_ptr0_next = wr_ptr0 + 2; // changed from + 1'b1 -- move forward 2
 							wr_ptr1_next = wr_ptr1 + 2;
-							// if (wr_ptr1_next == rd_ptr_next) begin // added logic to full signal -- one left condition
-							// 	full_next = 1;
-							// 	one_left_next = 0;
-							// end
-							// else if (wr_ptr0_next == rd_ptr_next ) begin// added logic for one_left signal
-							// 	one_left_next = 1;
-							// end
 
-							// cleaner:
 							full_next = (wr_ptr1_next == rd_ptr_next);
 							one_left_next = (wr_ptr0_next == rd_ptr_next);
 							empty_next = 1'b0;
@@ -85,15 +78,7 @@ module fifo_ctrl #(parameter ADDR_WIDTH=4)
 					if (~empty)	
 						begin	
 							rd_ptr_next = rd_ptr + 1;
-							// if (rd_ptr_next == wr_ptr1) // changed from wr_ptr to wr_ptr1
-							// 	empty_next = 1;
-							// else if (one_left) // if one_left before read -- rd_ptr == wr_ptr0
-							// 	one_left_next = 0;
-							// else if (rd_ptr_next == wr_ptr)	// added logic for one_left
-							// 	one_left_next = 1;
-							// full_next = 0;
 
-							// cleaner:
 							full_next = 1'b0;
 							one_left_next = (rd_ptr_next == wr_ptr0);
 							empty_next = (rd_ptr_next == wr_ptr1);
@@ -108,20 +93,22 @@ module fifo_ctrl #(parameter ADDR_WIDTH=4)
 						begin
 							wr_ptr0_next = wr_ptr0 + 2; // changed from + 1'b1
 							wr_ptr1_next = wr_ptr1 + 2; 
-							// empty_next = 0;
-							// if (wr_ptr1_next == rd_ptr) // changed from wr_ptr_next == rd_ptr
-							// 	full_next = 1;
-							// else if (wr_ptr0_next == rd_ptr) // adde logic for one_left
-							// 	one_left_next = 1;
 
-							// cleaner:
 							full_next = (wr_ptr1_next == rd_ptr);
 							one_left_next = (wr_ptr0_next == rd_ptr);
 							empty_next = 1'b0;
 						end
 				end // 2'b01
 			2'b00: ; // no change
+			default: begin
+				// code here
+			end
 		endcase
 	end  // always_comb
 	
 endmodule  // fifo_ctrl
+
+
+// module fifo_ctrl_tb();
+
+// endmodule

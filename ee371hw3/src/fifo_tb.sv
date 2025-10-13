@@ -30,23 +30,20 @@ module fifo_tb ();
 						rd <= 1'b1;											@(posedge clk); // empty = 1
 		
 		reset <= 1'b1; 		@(posedge clk);
-		reset <= 1'b0;		@(posedge clk);
-
-		$display("wr_addr0: %d  wr_addr1: %d rd_addr: %d", w_addr0, w_addr1, r_addr);
-
+		reset <= 1'b0;		
+		wr <= 1'b1;		rd <= 1'b0;		
 		$display("------------wr = high, rd = low-----------");
-		wr <= 1'b1;		rd <= 1'b0;
-
-		$display("wr_addr0: %d  wr_addr1: %d rd_addr: %d", w_addr0, w_addr1, r_addr);
-		
 		// write only until make buffer is full
 		// should see on_left go high before full goes high
 		for (i = 0; i < 8; i++) begin	// loop 8 times since w_data takes up two addresses
-			$display("wr_addr0: %d  wr_addr1: %d rd_addr: %d", w_addr0, w_addr1, r_addr);
 			w_data <= 16'b1111111100000000; 	@(posedge clk);
 			$display("wr_addr0: %d  wr_addr1: %d rd_addr: %d  w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
 					 w_addr0, w_addr1, r_addr, w_data, r_data, empty, full, one_left);
 		end
+		// one more clock edge to update signals
+		wr <= 1'b0; 	@(posedge clk);
+		$display("wr_addr0: %d  wr_addr1: %d rd_addr: %d  w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
+					 w_addr0, w_addr1, r_addr, w_data, r_data, empty, full, one_left);
 
 		//see what's store in register file
 		$display("Array contents:");
@@ -58,13 +55,13 @@ module fifo_tb ();
 		// now read out all the data
 		// should see one_left after reading from the first address
 		// should see empty go high after reading out all the data
+		rd <= 1'b0;
 		$display("------------wr = low, rd = toggling-----------");
-		wr <= 1'b0;
 		for (i = 0; i < 16; i++) begin
 			rd <= 1'b1; @(posedge clk);
 			rd <= 1'b0; @(posedge clk);
-			$display("w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
-					 w_data, r_data, empty, full, one_left);
+			$display("wr_addr0: %d  wr_addr1: %d rd_addr: %d  w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
+					 w_addr0, w_addr1, r_addr, w_data, r_data, empty, full, one_left);
 		end
 		
 		// see what's store in register file
