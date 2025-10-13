@@ -79,43 +79,47 @@ module fifo_ctrl #(parameter ADDR_WIDTH=4)
 							one_left_next = (wr_ptr0_next == rd_ptr_next);
 							empty_next = 1'b0;
 						end
-				end
-			2'b10:  // read
-				if (~empty)	
-					begin	
-						rd_ptr_next = rd_ptr + 1;
-						// if (rd_ptr_next == wr_ptr1) // changed from wr_ptr to wr_ptr1
-						// 	empty_next = 1;
-						// else if (one_left) // if one_left before read -- rd_ptr == wr_ptr0
-						// 	one_left_next = 0;
-						// else if (rd_ptr_next == wr_ptr)	// added logic for one_left
-						// 	one_left_next = 1;
-						// full_next = 0;
+				end // 2'b00
+			2'b10:  
+				begin // read
+					if (~empty)	
+						begin	
+							rd_ptr_next = rd_ptr + 1;
+							// if (rd_ptr_next == wr_ptr1) // changed from wr_ptr to wr_ptr1
+							// 	empty_next = 1;
+							// else if (one_left) // if one_left before read -- rd_ptr == wr_ptr0
+							// 	one_left_next = 0;
+							// else if (rd_ptr_next == wr_ptr)	// added logic for one_left
+							// 	one_left_next = 1;
+							// full_next = 0;
 
-						// cleaner:
-						full_next = 1'b0;
-						one_left_next = (rd_ptr_next == wr_ptr0);
-						empty_next = (rd_ptr_next == wr_ptr1);
-					end
-			2'b01:  // write
-				// add conditional of ~one_left (rd_ptr != wr_ptr0)
-				// there has to be at least 2 open addresses to write in data
-				// since each address only stores half the width of the data written in
-				if (~full & ~one_left) // ~full & (rd_ptr != wr_ptr0)
-					begin
-						wr_ptr0_next = wr_ptr0 + 2; // changed from + 1'b1
-						wr_ptr1_next = wr_ptr1 + 2; 
-						// empty_next = 0;
-						// if (wr_ptr1_next == rd_ptr) // changed from wr_ptr_next == rd_ptr
-						// 	full_next = 1;
-						// else if (wr_ptr0_next == rd_ptr) // adde logic for one_left
-						// 	one_left_next = 1;
+							// cleaner:
+							full_next = 1'b0;
+							one_left_next = (rd_ptr_next == wr_ptr0);
+							empty_next = (rd_ptr_next == wr_ptr1);
+						end
+				end // 2'b10
+			2'b01:  
+				begin// write
+					// add conditional of ~one_left (rd_ptr != wr_ptr0)
+					// there has to be at least 2 open addresses to write in data
+					// since each address only stores half the width of the data written in
+					if (~full & ~one_left) // ~full & (rd_ptr != wr_ptr0)
+						begin
+							wr_ptr0_next = wr_ptr0 + 2; // changed from + 1'b1
+							wr_ptr1_next = wr_ptr1 + 2; 
+							// empty_next = 0;
+							// if (wr_ptr1_next == rd_ptr) // changed from wr_ptr_next == rd_ptr
+							// 	full_next = 1;
+							// else if (wr_ptr0_next == rd_ptr) // adde logic for one_left
+							// 	one_left_next = 1;
 
-						// cleaner:
-						full_next = (wr_ptr1_next == rd_ptr);
-						one_left_next = (wr_ptr0_next == rd_ptr);
-						empty_next = 1'b0;
-					end
+							// cleaner:
+							full_next = (wr_ptr1_next == rd_ptr);
+							one_left_next = (wr_ptr0_next == rd_ptr);
+							empty_next = 1'b0;
+						end
+				end // 2'b01
 			2'b00: ; // no change
 		endcase
 	end  // always_comb

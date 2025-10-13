@@ -4,6 +4,7 @@ module fifo_tb ();
 	logic empty, full, one_left;
 	logic [2*8-1:0] w_data; // set DATA_WIDTH to 8 for testbench
 	logic [8-1:0] r_data;
+	logic [4-1:0] w_addr0, w_addr1, r_addr;
 
 	// instantiace fifo
 	// DATA_WIDTH=8, ADDR_WIDTH=4 (16 different addresses) -- default
@@ -30,14 +31,21 @@ module fifo_tb ();
 		
 		reset <= 1'b1; 		@(posedge clk);
 		reset <= 1'b0;		@(posedge clk);
+
+		$display("wr_addr0: %d  wr_addr1: %d rd_addr: %d", w_addr0, w_addr1, r_addr);
+
 		$display("------------wr = high, rd = low-----------");
 		wr <= 1'b1;		rd <= 1'b0;
+
+		$display("wr_addr0: %d  wr_addr1: %d rd_addr: %d", w_addr0, w_addr1, r_addr);
+		
 		// write only until make buffer is full
 		// should see on_left go high before full goes high
 		for (i = 0; i < 8; i++) begin	// loop 8 times since w_data takes up two addresses
+			$display("wr_addr0: %d  wr_addr1: %d rd_addr: %d", w_addr0, w_addr1, r_addr);
 			w_data <= 16'b1111111100000000; 	@(posedge clk);
-			$display("w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
-					 w_data, r_data, empty, full, one_left);
+			$display("wr_addr0: %d  wr_addr1: %d rd_addr: %d  w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
+					 w_addr0, w_addr1, r_addr, w_data, r_data, empty, full, one_left);
 		end
 
 		//see what's store in register file

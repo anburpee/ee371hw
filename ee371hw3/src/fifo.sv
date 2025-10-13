@@ -8,7 +8,8 @@
 
  // add signal for at least 2 addresses of the fifo being empty
 module fifo #(parameter DATA_WIDTH=8, ADDR_WIDTH=4)
-            (clk, reset, rd, wr, empty, full, one_left, w_data, r_data);
+            (clk, reset, rd, wr, empty, full, one_left, w_data, r_data,
+			 w_addr0, w_addr1, r_addr);
 
 	input  logic clk, reset, rd, wr;
 	output logic empty, full, one_left;
@@ -16,7 +17,8 @@ module fifo #(parameter DATA_WIDTH=8, ADDR_WIDTH=4)
 	output logic [DATA_WIDTH-1:0] r_data;
 	
 	// signal declarations
-	logic [ADDR_WIDTH-1:0] w_addr0, w_addr1, r_addr; // split up w_addr
+	//logic [ADDR_WIDTH-1:0] w_addr0, w_addr1, r_addr; // split up w_addr
+	output logic [ADDR_WIDTH-1:0] w_addr0, w_addr1, r_addr; // split up w_addr
 	logic w_en;
 	
 	// enable write only when (wr is high and)FIFO is:
