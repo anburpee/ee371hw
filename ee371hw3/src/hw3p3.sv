@@ -4,7 +4,7 @@ module hw3p3 (clk, reset, X, Ya, Yb, Yc, Z1, Z2);
 	input logic clk, reset, X;
 	output logic Ya, Yb, Yc, Z1, Z2;
 
-	enum logic [1:0] {s0 = 2'b00, s1 = 2'b01, s2 = 2'b10} ps, ns;
+	enum {s0, s1, s2} ps, ns;
 	
 	always_comb begin
 		case (ps)
@@ -13,12 +13,12 @@ module hw3p3 (clk, reset, X, Ya, Yb, Yc, Z1, Z2);
 				Yb = 0;
 				Yc = 0;
 				if (X) begin
-					ns = S1;
+					ns = s1;
 					Z1 = 0;
 					Z2 = 0;
 				end
 				else begin
-					ns = S0;
+					ns = s0;
 					Z1 = 0;
 					Z2 = 0;
 				end
@@ -28,12 +28,12 @@ module hw3p3 (clk, reset, X, Ya, Yb, Yc, Z1, Z2);
 				Yb = 1;
 				Yc = 0;
 				if (X) begin
-					ns = S2;
+					ns = s2;
 					Z1 = 0;
 					Z2 = 0;
 				end
 				else begin
-					ns = S0;
+					ns = s0;
 					Z1 = 0;
 					Z2 = 0;
 				end
@@ -43,12 +43,12 @@ module hw3p3 (clk, reset, X, Ya, Yb, Yc, Z1, Z2);
 				Yb = 0;
 				Yc = 1;
 				if (X) begin
-					ns = S2;
+					ns = s2;
 					Z1 = 0;
 					Z2 = 1;
 				end
 				else begin
-					ns = S0;
+					ns = s0;
 					Z1 = 1;
 					Z2 = 0;
 				end
@@ -58,12 +58,12 @@ module hw3p3 (clk, reset, X, Ya, Yb, Yc, Z1, Z2);
 				Yb = 0;
 				Yc = 0;
 				if (X) begin
-					ns = S0;
+					ns = s0;
 					Z1 = 0;
 					Z2 = 0;
 				end
 				else begin
-					ns = S0;
+					ns = s0;
 					Z1 = 0;
 					Z2 = 0;
 				end
