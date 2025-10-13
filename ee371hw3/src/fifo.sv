@@ -5,21 +5,24 @@
  * Outputs: 1-bit empty and full indicate the status of the buffer
  * and r_data holds the value of the head of the buffer (unless empty).
  */
+
+ // add signal for at least 2 addresses of the fifo being empty
 module fifo #(parameter DATA_WIDTH=8, ADDR_WIDTH=4)
-            (clk, reset, rd, wr, empty, full, w_data, r_data);
+            (clk, reset, rd, wr, empty, full, one_left, w_data, r_data);
 
 	input  logic clk, reset, rd, wr;
-	output logic empty, full;
+	output logic empty, full, one_left;
 	input  logic [2*DATA_WIDTH-1:0] w_data; // multiplied bit width by 2
 	output logic [DATA_WIDTH-1:0] r_data;
 	
 	// signal declarations
-	logic [ADDR_WIDTH-1:0] w_addr, r_addr;
+	logic [ADDR_WIDTH-1:0] w_addr0, w_addr1, r_addr; // split up w_addr
 	logic w_en;
 	
-	// enable write only when FIFO is not full
-	// or if reading and writing simultaneously
-	assign w_en = wr & (~full | rd);
+	// enable write only when (wr is high and)FIFO is:
+	// 1) one empty address left AND reading (can only write if also reading)
+	// 2) not full AND not one empty addresses left (at least 2 left--can write without reading)
+	assign w_en = wr & ((one_left & rd) | (~full & ~one_left)); // changed logic from wr & (~full | rd)
 	
 	// instantiate FIFO controller and register file
 	fifo_ctrl #(ADDR_WIDTH) c_unit (.*);

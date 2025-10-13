@@ -6,10 +6,10 @@
  // DATA_WIDTH is the number of bits read out at a time;
  // the actual width of the data written in is 2*DATA_WIDTH
 module reg_file #(parameter DATA_WIDTH=8, ADDR_WIDTH=2) // change default ADDR_WIDTH to 4 to match other files?
-                (clk, w_data, w_en, w_addr, r_addr, r_data);
+                (clk, w_data, w_en, w_addr0, w_addr1, r_addr, r_data);
 
 	input  logic clk, w_en;
-	input  logic [ADDR_WIDTH-1:0] w_addr, r_addr;
+	input  logic [ADDR_WIDTH-1:0] w_addr0, w_addr1, r_addr;
 	input  logic [2*DATA_WIDTH-1:0] w_data; // multiplied width by 2
 	output logic [DATA_WIDTH-1:0] r_data;
 	
@@ -19,7 +19,8 @@ module reg_file #(parameter DATA_WIDTH=8, ADDR_WIDTH=2) // change default ADDR_W
 	// write operation (synchronous)
 	always_ff @(posedge clk)
 	   if (w_en)
-		   array_reg[w_addr] <= w_data;
+		   array_reg[w_addr0] <= w_data[DATA_WIDTH-1:0];	// LSBs of data
+		   array_reg[w_addr1] <= w_data[2*DATA_WIDTH-1:DATA_WIDTH];	// MSBs of data
 	
 	// read operation (asynchronous)
 	assign r_data = array_reg[r_addr];
