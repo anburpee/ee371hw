@@ -8,6 +8,9 @@ vlog "../src/fifo.sv"
 vlog "../src/fifo_ctrl.sv"
 vlog "../src/reg_file.sv"
 vlog "../src/fifo_tb.sv"
+vlog "../src/hw3p3_tb.sv"
+vlog "../src/hw3p3.sv"
+
 
 
 # Call vsim to invoke simulator

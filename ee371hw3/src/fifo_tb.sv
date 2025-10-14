@@ -20,15 +20,7 @@ module fifo_tb ();
 	// test the device
 	integer i;
 	initial begin
-		reset <= 1'b1; 		@(posedge clk);
-		reset <= 1'b0;		@(posedge clk);
 
-		// read & write when empty
-		wr <= 1'b1;		rd <= 1'b1; 	w_data <= 16'b1111111100000000; 	@(posedge clk);
-		// read to make fifo buffer empty
-						rd <= 1'b0;											@(posedge clk); 
-						rd <= 1'b1;											@(posedge clk); // empty = 1
-		
 		reset <= 1'b1; 		@(posedge clk);
 		reset <= 1'b0;		
 		wr <= 1'b1;		rd <= 1'b0;		
@@ -45,39 +37,103 @@ module fifo_tb ();
 		$display("wr_addr0: %d  wr_addr1: %d rd_addr: %d  w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
 					 w_addr0, w_addr1, r_addr, w_data, r_data, empty, full, one_left);
 
-		//see what's store in register file
+		//see what's stored in register file
 		$display("Array contents:");
 		for (i = 0; i < 16; i++) begin
-		// used ChatGPT to debug --- told me i needed to have dut.r_unit before array_reg[i]
+		// used ChatGPT to debug the modelsim error --- told me i needed to have dut.r_unit before array_reg[i]
 			$display("%b", dut.r_unit.array_reg[i]); 
 		end
+
+		// ------------------------edge case: check you can't write new data when full -------------------------
+		// ONLY write
+		wr <= 1'b1;		rd <= 1'b0;
+		w_data <= 16'b1010101010101010; 	@(posedge clk);
+		@(posedge clk); // for signals to update
+		$display("---------tried to ONLY write data when full-----------");
+		$display("wr_addr0: %d  wr_addr1: %d rd_addr: %d  w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
+					 w_addr0, w_addr1, r_addr, w_data, r_data, empty, full, one_left);
+
+		//see what's stored in register file -- should be unchanged
+		$display("Array contents (should be unchanged):");
+		for (i = 0; i < 16; i++) begin
+		// used ChatGPT to debug the modelsim error --- told me i needed to have dut.r_unit before array_reg[i]
+			$display("%b", dut.r_unit.array_reg[i]); 
+		end
+
+		// read and write
+		wr <= 1'b1;		rd <= 1'b1;
+		w_data <= 16'b1010101010101010; 	@(posedge clk);
+		@(posedge clk); // for signals to update
+		$display("---------tried to read and write data when full-----------");
+		$display("wr_addr0: %d  wr_addr1: %d rd_addr: %d  w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
+					 w_addr0, w_addr1, r_addr, w_data, r_data, empty, full, one_left);
+
+		//see what's stored in register file -- should be unchanged
+		$display("Array contents (should be unchanged):");
+		for (i = 0; i < 16; i++) begin
+		// used ChatGPT to debug the modelsim error --- told me i needed to have dut.r_unit before array_reg[i]
+			$display("%b", dut.r_unit.array_reg[i]); 
+		end
+
+
+		// ------------------------edge case: check you can't ONLY write new data when one_left ---------------------
+		
+		wr <= 1'b0;		rd <= 1'b1; 		@(posedge clk);//read one address to drive one_left high
+		// one_left is high
+		wr <= 1'b1; 	rd <= 1'b0;
+		w_data <= 16'b1010101010101010; 	@(posedge clk);
+		@(posedge clk); // for signals to update
+		$display("---------tried to write data when one_left-----------");
+		$display("wr_addr0: %d  wr_addr1: %d rd_addr: %d  w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
+					 w_addr0, w_addr1, r_addr, w_data, r_data, empty, full, one_left);
+
+		//see what's stored in register file -- should be unchanged
+		$display("Array contents (should be unchanged):");
+		for (i = 0; i < 16; i++) begin
+		// used ChatGPT to debug the modelsim error --- told me i needed to have dut.r_unit before array_reg[i]
+			$display("%b", dut.r_unit.array_reg[i]); 
+		end
+
+		// ------------------------edge case: check you CAN write AND read when one_left ---------------------
+		// one_left is high
+		wr <= 1'b1; 	rd <= 1'b1;
+		w_data <= 16'b1010101010101010; 	@(posedge clk);
+		@(posedge clk); // for signals to update
+		$display("---------tried to read and write data when one_left-----------");
+		$display("wr_addr0: %d  wr_addr1: %d rd_addr: %d  w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
+					 w_addr0, w_addr1, r_addr, w_data, r_data, empty, full, one_left);
+
+		//see what's stored in register file -- should be unchanged
+		$display("Array contents (should be CHANGED):");
+		for (i = 0; i < 16; i++) begin
+		// used ChatGPT to debug the modelsim error --- told me i needed to have dut.r_unit before array_reg[i]
+			$display("%b", dut.r_unit.array_reg[i]); 
+		end
+
 
 		// now read out all the data
 		// should see one_left after reading from the first address
 		// should see empty go high after reading out all the data
-		rd <= 1'b0;
+		// rd <= 1'b0;
 		$display("------------wr = low, rd = toggling-----------");
+		wr <= 1'b0; 	rd <= 1'b0;
 		for (i = 0; i < 16; i++) begin
-			rd <= 1'b1; @(posedge clk);
-			rd <= 1'b0; @(posedge clk);
 			$display("wr_addr0: %d  wr_addr1: %d rd_addr: %d  w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
 					 w_addr0, w_addr1, r_addr, w_data, r_data, empty, full, one_left);
+			rd <= 1'b1; @(posedge clk);
+			rd <= 1'b0; @(posedge clk);
 		end
 		
+		@(posedge clk);
+		$display("wr_addr0: %d  wr_addr1: %d rd_addr: %d  w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
+					 w_addr0, w_addr1, r_addr, w_data, r_data, empty, full, one_left);
+
 		// see what's store in register file
 		$display("Array contents:");
 		for (i = 0; i < 16; i++) begin
 		// used ChatGPT to debug --- told me i needed to have dut.r_unit before array_reg[i]
 			$display("%b", dut.r_unit.array_reg[i]); 
 		end
-
-		// test that you can write & read when one_left
-
-		// test that you CAN'T only write when one_left
-
-		// test that you can't write & read OR write only when full 
-
-
 		
 		$stop; // stop simultion
 	end  // initial

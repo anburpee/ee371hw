@@ -100,9 +100,9 @@ module fifo_ctrl #(parameter ADDR_WIDTH=4)
 						end
 				end // 2'b01
 			2'b00: ; // no change
-			default: begin
-				// code here
-			end
+			// default: begin
+			// 	// code here
+			// end
 		endcase
 	end  // always_comb
 	
