@@ -6,12 +6,14 @@ module hw3p3_tb ();
 	
 	hw3p3 dut (.*);
 
+	// set up simulation clock
 	parameter clk_period = 100;
 	initial begin
 		clk = 0;
 		forever #(clk_period/2) clk = ~clk;
 	end
 	
+	// test the design
 	initial begin
 		
 		reset = 1; @(posedge clk); // S0
@@ -25,7 +27,7 @@ module hw3p3_tb ();
 		X = 1; @(posedge clk); // S1
 		X = 0; @(posedge clk); // S0
 		
-		$stop;
+		$stop; // stop simulation
 	end  // initial
 	
 endmodule  // hw3p3_tb

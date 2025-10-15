@@ -1,7 +1,7 @@
 /* FIFO controller to manage a register file as a circular queue.
  * Manipulates output read and write addresses based on 1-bit
  * read (rd) and write (wr) requests and current buffer status
- * signals empty and full.
+ * signals empty, one_left, and full.
  */
 module fifo_ctrl #(parameter ADDR_WIDTH=4)
                  (clk, reset, rd, wr, empty, full, one_left, w_addr0, w_addr1, r_addr);
@@ -17,7 +17,8 @@ module fifo_ctrl #(parameter ADDR_WIDTH=4)
 	logic [ADDR_WIDTH-1:0] rd_ptr, rd_ptr_next;
 	// split up wr_ptr to wr_ptr0 and wr_ptr1
 	logic [ADDR_WIDTH-1:0] wr_ptr0, wr_ptr0_next, wr_ptr1, wr_ptr1_next;
-
+	// one_left is true when there is one address left at the tail of the buffer that
+	// is available for writing in new data
 	logic full_next, empty_next, one_left_next; // new -- intermediate logic signals
 	
 	// output assignments
@@ -100,9 +101,6 @@ module fifo_ctrl #(parameter ADDR_WIDTH=4)
 						end
 				end // 2'b01
 			2'b00: ; // no change
-			// default: begin
-			// 	// code here
-			// end
 		endcase
 	end  // always_comb
 	

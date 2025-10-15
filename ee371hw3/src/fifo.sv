@@ -2,11 +2,10 @@
  * bus widths based on internal register file and FIFO controller.
  * Inputs: 1-bit rd removes head of buffer and 1-bit wr writes
  * w_data to the tail of the buffer.
- * Outputs: 1-bit empty and full indicate the status of the buffer
+ * Outputs: 1-bit empty, one_left, and full indicate the status of the buffer
  * and r_data holds the value of the head of the buffer (unless empty).
  */
 
- // add signal for at least 2 addresses of the fifo being empty
 module fifo #(parameter DATA_WIDTH=8, ADDR_WIDTH=4)
             (clk, reset, rd, wr, empty, full, one_left, w_data, r_data);
 			 //, w_addr0, w_addr1, r_addr); // for simulation

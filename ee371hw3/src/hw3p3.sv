@@ -1,11 +1,13 @@
 /* Arbitrary ASM chart implementation to examine output timings */
-// we need to implement the mealy/moore asm chart from the hw specs !
+// we need to implement the mealy/moore asm chart from the hw specs!
+// all inputs and outputs are 1 bit
 module hw3p3 (clk, reset, X, Ya, Yb, Yc, Z1, Z2);
 	input logic clk, reset, X;
 	output logic Ya, Yb, Yc, Z1, Z2;
 
 	enum {s0, s1, s2} ps, ns;
 	
+	// next state & output logic
 	always_comb begin
 		case (ps)
 			s0: begin
@@ -69,13 +71,14 @@ module hw3p3 (clk, reset, X, Ya, Yb, Yc, Z1, Z2);
 				end
 			end
 		endcase
-	end
+	end // always_comb
 
+	// state update logic
 	always_ff @(posedge clk) begin
 		if (reset) 
 			ps <= s0;
 		else 
 			ps <= ns;
-	end
+	end // always_ff
 	
 endmodule  // hw3p3
