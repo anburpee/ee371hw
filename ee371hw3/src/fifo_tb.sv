@@ -4,7 +4,7 @@ module fifo_tb ();
 	logic empty, full, one_left;
 	logic [2*8-1:0] w_data; // set DATA_WIDTH to 8 for testbench
 	logic [8-1:0] r_data;
-	logic [4-1:0] w_addr0, w_addr1, r_addr;
+	// logic [4-1:0] w_addr0, w_addr1, r_addr;
 
 	// instantiace fifo
 	// DATA_WIDTH=8, ADDR_WIDTH=4 (16 different addresses) -- default
@@ -29,18 +29,21 @@ module fifo_tb ();
 		// should see on_left go high before full goes high
 		for (i = 0; i < 8; i++) begin	// loop 8 times since w_data takes up two addresses
 			w_data <= 16'b1111111100000000; 	@(posedge clk);
-			$display("wr_addr0: %d  wr_addr1: %d rd_addr: %d  w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
-					 w_addr0, w_addr1, r_addr, w_data, r_data, empty, full, one_left);
+			$display("w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
+					 w_data, r_data, empty, full, one_left);
+			// $display("wr_addr0: %d  wr_addr1: %d rd_addr: %d  w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
+			// 		 w_addr0, w_addr1, r_addr, w_data, r_data, empty, full, one_left);
 		end
 		// one more clock edge to update signals
 		wr <= 1'b0; 	@(posedge clk);
-		$display("wr_addr0: %d  wr_addr1: %d rd_addr: %d  w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
-					 w_addr0, w_addr1, r_addr, w_data, r_data, empty, full, one_left);
+		$display("w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
+					w_data, r_data, empty, full, one_left);
+		// $display("wr_addr0: %d  wr_addr1: %d rd_addr: %d  w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
+		// 		 w_addr0, w_addr1, r_addr, w_data, r_data, empty, full, one_left);addr0, w_addr1, r_addr, w_data, r_data, empty, full, one_left);
 
 		//see what's stored in register file
 		$display("Array contents:");
 		for (i = 0; i < 16; i++) begin
-		// used ChatGPT to debug the modelsim error --- told me i needed to have dut.r_unit before array_reg[i]
 			$display("%b", dut.r_unit.array_reg[i]); 
 		end
 
@@ -50,13 +53,14 @@ module fifo_tb ();
 		w_data <= 16'b1010101010101010; 	@(posedge clk);
 		@(posedge clk); // for signals to update
 		$display("---------tried to ONLY write data when full-----------");
-		$display("wr_addr0: %d  wr_addr1: %d rd_addr: %d  w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
-					 w_addr0, w_addr1, r_addr, w_data, r_data, empty, full, one_left);
+		$display("w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
+					 w_data, r_data, empty, full, one_left);
+		// $display("wr_addr0: %d  wr_addr1: %d rd_addr: %d  w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
+		// 		 w_addr0, w_addr1, r_addr, w_data, r_data, empty, full, one_left);			 w_addr0, w_addr1, r_addr, w_data, r_data, empty, full, one_left);
 
 		//see what's stored in register file -- should be unchanged
 		$display("Array contents (should be unchanged):");
 		for (i = 0; i < 16; i++) begin
-		// used ChatGPT to debug the modelsim error --- told me i needed to have dut.r_unit before array_reg[i]
 			$display("%b", dut.r_unit.array_reg[i]); 
 		end
 
@@ -65,13 +69,14 @@ module fifo_tb ();
 		w_data <= 16'b1010101010101010; 	@(posedge clk);
 		@(posedge clk); // for signals to update
 		$display("---------tried to read and write data when full-----------");
-		$display("wr_addr0: %d  wr_addr1: %d rd_addr: %d  w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
-					 w_addr0, w_addr1, r_addr, w_data, r_data, empty, full, one_left);
+		$display("w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
+					 w_data, r_data, empty, full, one_left);
+		// $display("wr_addr0: %d  wr_addr1: %d rd_addr: %d  w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
+		// 		 w_addr0, w_addr1, r_addr, w_data, r_data, empty, full, one_left);			 w_addr0, w_addr1, r_addr, w_data, r_data, empty, full, one_left);
 
 		//see what's stored in register file -- should be unchanged
 		$display("Array contents (should be unchanged):");
 		for (i = 0; i < 16; i++) begin
-		// used ChatGPT to debug the modelsim error --- told me i needed to have dut.r_unit before array_reg[i]
 			$display("%b", dut.r_unit.array_reg[i]); 
 		end
 
@@ -84,13 +89,14 @@ module fifo_tb ();
 		w_data <= 16'b1010101010101010; 	@(posedge clk);
 		@(posedge clk); // for signals to update
 		$display("---------tried to write data when one_left-----------");
-		$display("wr_addr0: %d  wr_addr1: %d rd_addr: %d  w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
-					 w_addr0, w_addr1, r_addr, w_data, r_data, empty, full, one_left);
+		$display("w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
+					 w_data, r_data, empty, full, one_left);
+		// $display("wr_addr0: %d  wr_addr1: %d rd_addr: %d  w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
+		// 		 w_addr0, w_addr1, r_addr, w_data, r_data, empty, full, one_left);
 
 		//see what's stored in register file -- should be unchanged
 		$display("Array contents (should be unchanged):");
 		for (i = 0; i < 16; i++) begin
-		// used ChatGPT to debug the modelsim error --- told me i needed to have dut.r_unit before array_reg[i]
 			$display("%b", dut.r_unit.array_reg[i]); 
 		end
 
@@ -100,13 +106,14 @@ module fifo_tb ();
 		w_data <= 16'b1010101010101010; 	@(posedge clk);
 		@(posedge clk); // for signals to update
 		$display("---------tried to read and write data when one_left-----------");
-		$display("wr_addr0: %d  wr_addr1: %d rd_addr: %d  w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
-					 w_addr0, w_addr1, r_addr, w_data, r_data, empty, full, one_left);
+		$display("w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
+					 w_data, r_data, empty, full, one_left);
+		// $display("wr_addr0: %d  wr_addr1: %d rd_addr: %d  w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
+		// 		 w_addr0, w_addr1, r_addr, w_data, r_data, empty, full, one_left);			 w_addr0, w_addr1, r_addr, w_data, r_data, empty, full, one_left);
 
 		//see what's stored in register file -- should be unchanged
 		$display("Array contents (should be CHANGED):");
 		for (i = 0; i < 16; i++) begin
-		// used ChatGPT to debug the modelsim error --- told me i needed to have dut.r_unit before array_reg[i]
 			$display("%b", dut.r_unit.array_reg[i]); 
 		end
 
@@ -118,20 +125,23 @@ module fifo_tb ();
 		$display("------------wr = low, rd = toggling-----------");
 		wr <= 1'b0; 	rd <= 1'b0;
 		for (i = 0; i < 16; i++) begin
-			$display("wr_addr0: %d  wr_addr1: %d rd_addr: %d  w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
-					 w_addr0, w_addr1, r_addr, w_data, r_data, empty, full, one_left);
+			$display("w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
+					 w_data, r_data, empty, full, one_left);
+			// $display("wr_addr0: %d  wr_addr1: %d rd_addr: %d  w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
+			// 		 w_addr0, w_addr1, r_addr, w_data, r_data, empty, full, one_left);		 w_addr0, w_addr1, r_addr, w_data, r_data, empty, full, one_left);
 			rd <= 1'b1; @(posedge clk);
 			rd <= 1'b0; @(posedge clk);
 		end
 		
 		@(posedge clk);
-		$display("wr_addr0: %d  wr_addr1: %d rd_addr: %d  w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
-					 w_addr0, w_addr1, r_addr, w_data, r_data, empty, full, one_left);
+		$display("w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
+					 w_data, r_data, empty, full, one_left);
+		// $display("wr_addr0: %d  wr_addr1: %d rd_addr: %d  w_data: %b  r_data: %b  empty: %b  full: %b, one_left: %b",
+		// 		 w_addr0, w_addr1, r_addr, w_data, r_data, empty, full, one_left);		 w_addr0, w_addr1, r_addr, w_data, r_data, empty, full, one_left);
 
 		// see what's store in register file
 		$display("Array contents:");
 		for (i = 0; i < 16; i++) begin
-		// used ChatGPT to debug --- told me i needed to have dut.r_unit before array_reg[i]
 			$display("%b", dut.r_unit.array_reg[i]); 
 		end
 		
