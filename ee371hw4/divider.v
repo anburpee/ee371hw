@@ -65,22 +65,22 @@ module divider (Clock, Resetn, s, LA, EB, DataA, DataB, R, Q, Done);
 		Rsel = 0; Done = 0;
 		case (y)
 			S1:	begin
-					LC = 1; ER = 1;
+					LC = 1; ER = 1; Rsel = 0; // added Rsel initiation
 					if (s == 0)
 					begin
-						LR = 1; ER0 = 0;
+						LR = 1; // ER0 = 0;  removed ER0 initialization
 					end
 					else
 					begin
-						LR = 0; EA = 1; ER0 = 1;
+						EA = 1; ER0 = 1; // LR = 0;  removed LR initialization
 					end
 				end
 			S2:	begin
 					Rsel = 1; ER = 1; ER0 = 1; EA = 1;
 					if (Cout) LR = 1;
-					else LR = 0;
+					// else LR = 0;  removed
 					if (z == 0) EC = 1;
-					else EC = 0;
+					// else EC = 0;  removed
 				end
 			S3:	Done = 1;
 		endcase
