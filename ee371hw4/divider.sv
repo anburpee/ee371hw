@@ -65,7 +65,7 @@ module divider (Clock, Resetn, s, LA, EB, DataA, DataB, R, Q, Done);
 		Rsel = 0; Done = 0;
 		case (y)
 			S1:	begin
-					LC = 1; ER = 1; Rsel = 0; // added Rsel initiation
+					LC = 1; ER = 1;
 					if (s == 0)
 					begin
 						LR = 1; // ER0 = 0;  removed ER0 initialization
@@ -96,7 +96,7 @@ module divider (Clock, Resetn, s, LA, EB, DataA, DataB, R, Q, Done);
 	shiftlne ShiftA (DataA, LA, EA, Cout, Clock, A);
 		defparam ShiftA.n = n;
 	assign Q = A;
-	downcount Counter (3'b000, Clock, EC, LC, Count);
+	downcount Counter (3'b111, Clock, EC, LC, Count); // downcounter: 3'b000 to 3'b111
 		defparam Counter.n = logn;
 
 	assign z = (Count == 0);

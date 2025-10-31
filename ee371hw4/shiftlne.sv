@@ -26,9 +26,11 @@ module shiftlne (R, L, E, w, Clock, Q);
 			Q <= R;
 		else if (E)
 			begin
-				Q[n-1] <= w;
-				for (k = n-2; k >= 0; k = k-1)
-					Q[k] <= Q[k+1];
+				// Q[n-1] <= w;
+				// for (k = n-2; k >= 0; k = k-1)
+				// 	Q[k] <= Q[k+1];
+				Q <= Q << 1;
+				Q[0] <= w;
 			end
 	end
 
