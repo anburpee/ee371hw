@@ -1,0 +1,23 @@
+//+++++++++++++++++++++++++++++++++++++++++++++++
+//   Class Definition
+//+++++++++++++++++++++++++++++++++++++++++++++++
+class PrimeDie4;
+  // random sides of die
+  rand bit [4:0] s1, s2, s3, s4;
+  // helper arrays
+  bit [4:0] prime_low[] = {2, 3, 5, 7, 11, 13};
+  bit [4:0] prime_high[] = {17, 19, 23, 29, 31};
+  
+  
+  // Constraints
+  constraint c_bad {
+    s1 == s2;
+  }
+  
+  
+  // Methods
+  task display;
+    $display("Prime die with sides: %2d %2d %2d %2d", s1, s2, s3, s4);
+  endtask
+  
+endclass

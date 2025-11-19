@@ -1,0 +1,53 @@
+// Code from http://www.asic-world.com/systemverilog/classes1.html#Example_-_Objects
+
+
+//+++++++++++++++++++++++++++++++++++++++++++++++
+//   Testbench Code
+//+++++++++++++++++++++++++++++++++++++++++++++++
+program class_tb;
+
+  //+++++++++++++++++++++++++++++++++++++++++++++
+  //   Class Definition
+  //+++++++++++++++++++++++++++++++++++++++++++++
+  class packet;
+    // members in class
+    byte size;
+    byte payload [];
+    byte i;
+
+    // Constructor
+    function new (byte size);
+      begin
+        this.size = size;
+        this.payload = new[size];
+        for (i = 0; i < this.size; i++) begin
+          this.payload[i] = $urandom_range(0, 255);
+        end 
+      end 
+    endfunction
+
+    // Task in class (object method)
+    task print ();
+      $write("Payload : ");
+      for (i = 0; i < size; i++) begin
+        $write("%x ", payload[i]);
+      end
+      $write("\n");
+    endtask
+
+    // Function in class (object method)
+    function byte get_size ();
+      get_size = size;
+    endfunction
+
+  endclass
+
+  packet pkt;
+
+  initial begin
+    pkt = new(5);
+    pkt.print();
+    $display ("Size of packet %0d", pkt.get_size());
+  end
+
+endprogram

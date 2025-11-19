@@ -1,0 +1,34 @@
+// Name: 
+// SID:  
+// EE/CSE371 Sp24 Homework 6
+
+
+/===========\
+| Problem 1 |
+\===========/
+EDA URL: 
+
+c) change: 
+   line #: 
+
+e) simulation time period: 
+   design of test inputs:  
+
+
+/===========\
+| Problem 2 |
+\===========/
+EDA URL: 
+
+
+/===========\
+| Problem 3 |
+\===========/
+EDA URL: 
+
+
+/===========\
+|  Wrap-up  |
+\===========/
+Time Spent: 
+Difficulty: 
