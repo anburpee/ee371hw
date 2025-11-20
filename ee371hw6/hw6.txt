@@ -21,7 +21,7 @@ e) simulation time period: from 273ns
 /===========\
 | Problem 2 |
 \===========/
-EDA URL: 
+EDA URL: https://www.edaplayground.com/x/q4QJ
 
 
 /===========\
