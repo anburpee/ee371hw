@@ -6,13 +6,16 @@
 /===========\
 | Problem 1 |
 \===========/
-EDA URL: 
+EDA URL: https://www.edaplayground.com/x/w8Kr
 
-c) change: 
-   line #: 
+c) change: changed from "req |-> req_gnt_seq;" to "gnt |-> req_gnt_seq;"
+   line #: 24
 
-e) simulation time period: 
-   design of test inputs:  
+e) simulation time period: from 273ns
+   design of test inputs:  We repeated the part of the testbench that throws
+                           multiple assertion failures, but with reset high.
+                           Since errors weren't thrown, we know that that reset
+                           disables the property trigger.
 
 
 /===========\
