@@ -1,5 +1,5 @@
-// Name: 
-// SID:  
+// Name: Aya Burpee, Brinda Moudgalya
+// SID:  2462847, 2337294
 // EE/CSE371 Sp24 Homework 6
 
 
