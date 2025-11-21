@@ -33,5 +33,5 @@ EDA URL: https://www.edaplayground.com/x/tN5g
 /===========\
 |  Wrap-up  |
 \===========/
-Time Spent: 
-Difficulty: 
+Time Spent: 6 hours
+Difficulty: hard
